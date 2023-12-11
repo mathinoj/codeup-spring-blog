@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home") //this tells spring to listen to a get request, which is /hello
+    @GetMapping("/")
     @ResponseBody
     public String hello() {
         return "This is the landing page!"; //whatever function is returned will be used by the requester response body
