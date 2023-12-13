@@ -1,5 +1,6 @@
 package com.codeup.codeupspringblog.controller;
 
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +21,17 @@ public class HelloController {
         return String.format("Hello from Spring, Matthias, this JSON! %s", LocalDateTime.now());
     }
 
-    @GetMapping(path = "/hello-msg/{personName}", produces = "application/json")
-    @ResponseBody
-    public String helloMessageName(@PathVariable String personName) {
-        return String.format("Hello from Spring, %s, this JSON! %s", personName, LocalDateTime.now());
-    }
+//    @GetMapping(path = "/hello-msg/{personName}", produces = "application/json")
+//    @ResponseBody
+//    public String helloMessageName(@PathVariable String personName) {
+//        return String.format("Hello from Spring, %s, this JSON! %s", personName, LocalDateTime.now());
+//    }
+@GetMapping("/hello/{name}")
+public String sayHello(@PathVariable String name, Model model) {
+    model.addAttribute("name", name);
+    return "hello";
+}
+
 
     private int counter = 0;
     @GetMapping(path = "/counter/{counterInit}")

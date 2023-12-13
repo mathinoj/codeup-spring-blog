@@ -12,7 +12,12 @@ public class MathController {
     public String addNumbs(@PathVariable int numb1, @PathVariable int numb2) {
         return "Your numbs added = " + (numb1 + numb2);
     }
-
+/*OR YOU CAN DO LIKE THIS*/
+//    @GetMapping(path = "/add/{numb1}/and/{numb2}", produces = "application/json")
+//    @ResponseBody
+//    public int addNumbs(@PathVariable int numb1, @PathVariable int numb2) {
+//        return (numb1 + numb2);
+//    }
     @GetMapping(path = "/subtract/{numb1}/from/{numb2}", produces = "application/json")
     @ResponseBody
     public String subNumbs(@PathVariable int numb1, @PathVariable int numb2) {
