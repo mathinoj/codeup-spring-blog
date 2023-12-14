@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
-//    private Post post1 = new Post("Post 1", "qewrqwerqwerqwe");
-//    private Post post2 = new Post("Post 2", "qewrqwerqwerqwe");
-//    private Post post3 = new Post(3, "Post 3", "qewrqwerqwerqwe");
-//    private Post post3 = new Post("Post 3", "Posted 3");
-    // Arrays.asList(1, 2, 3)
-//    private List<Post> posts = new ArrayList<>(List.of(post1, post2, post3));
+    private Post post1 = new Post(1, "Post 1", "qewrqwerqwerqwe");
+    private Post post2 = new Post(2, "Post 2", "qewrqwerqwerqwe");
+    private Post post3 = new Post(3, "Post 3", "qewrqwerqwerqwe");
+    private List<Post> posts = new ArrayList<>(List.of(post1, post2, post3));
 
     private final PostRepository postDao;
-    private final UserRepository userDao;
+    //finals mean the values can never be reassigned. Also saves memory.
+    private final UserRepository userDao; //this is added to the post controller as a property
 
     //this is a PostController constructor. And everytime a PostController gets created a postDao should be part of it
     public PostController(PostRepository postDao, UserRepository userDao){
         this.postDao = postDao;
         this.userDao = userDao;
+        //this sets the repository's in the constructor
     }
 
 
@@ -41,10 +40,16 @@ public class PostController {
         return "/posts/index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping({"/{id}", "/{id}"})
     public String getPostDetail(@PathVariable long id,
                                 Model model) {
-        model.addAttribute("post", postDao.findAll());
+        Post post;
+        if(postDao.findById(id).isPresent()){
+            post = postDao.findById(id).get();
+        }else{
+            post = new Post("Post no find.", "");
+        }
+        model.addAttribute("post", post);
         return "/posts/show";
     }
 
@@ -58,10 +63,10 @@ public class PostController {
 
     @PostMapping("/create")
     public String submitPost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
+        Post post = new Post(title, body);
         User user = userDao.findUserById(1L);
-//        Post post = new Post(title, body);
-//        postDao.save(post);
-        postDao.save(new Post(title, body, user));
+        post.setUser(user);
+        postDao.save(post);
         return "redirect:/posts";
     }
 }
