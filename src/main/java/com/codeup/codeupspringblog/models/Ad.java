@@ -23,7 +23,7 @@ public class Ad {
     @Column(nullable = false, length = 1024)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) //cuz many ads can have one user
+    @ManyToOne(cascade = CascadeType.PERSIST) //cuz many ads can be made by one user
     @JoinColumn(name="user_id")
     private User user;
 

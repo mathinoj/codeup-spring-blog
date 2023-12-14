@@ -23,8 +23,13 @@ public class Post {
     @Column(nullable = false, length = 500)
     private String body;
 
-    public Post(String title, String body) {
+    @ManyToOne(cascade = CascadeType.PERSIST) //cuz many posts can be made by one user
+    @JoinColumn(name="user_id")
+    private User user;
+
+    public Post(String title, String body, User user) {
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 }

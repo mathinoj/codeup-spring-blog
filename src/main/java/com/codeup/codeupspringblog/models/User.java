@@ -31,6 +31,9 @@ public class User {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Ad> ads;
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Post> posts;
+
 
     public User(String username, String email, String password) {
         this.username = username;

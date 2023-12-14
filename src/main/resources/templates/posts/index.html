@@ -17,6 +17,10 @@
   <div th:each="post: ${posts}">
     <h2><a th:href="@{|/posts/${post.id}|}">[[${post.title}]]</a></h2>
     <p th:text="${post.body}"></p>
+<!--    <div th:each="user: ${users}">-->
+<!--      <div th:for></div>-->
+    <h4 th:text="${post.user.username}"></h4>
+<!--    </div>-->
   </div>
 
 
