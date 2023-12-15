@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <th:block th:replace="~{partials/partials :: head (title='Submit an Ad')}"></th:block>
+  <th:block th:replace="~{partials/partials :: head (title='View Single Ad')}"></th:block>
 </head>
 
 <body>
@@ -10,22 +10,28 @@
 <nav th:replace="~{partials/partials :: navbar}">
 </nav>
 
-<header th:insert="~{partials/partials :: header (heading='Create Ad')}"></header>
+<header th:insert="~{partials/partials :: header (heading='View The Ad You Clicked')}"></header>
 
 <div class="container-fluid">
 
-  <form action="/ads/create" method="post">
-    <div>
-      <label class="form-label" for="title">Title:</label>
-      <input class="form-control" type="text" name="title" id="title"><br>
-    </div>
-    <div>
-      <label class="form-label" for="description">Description:</label>
-      <textarea class="form-control" name="description" id="description"></textarea>
-    </div>
+  <h2>Here is the ad:</h2>
+  <h3 th:text="${ad.title}"></h3>
+  <p th:text="${ad.description}"></p>
+  <p>Posted by: [[${ad.user.username}]]</p>
+  <a th:href="@{|/ads/${ad.id}/edit|}">Edit</a>
 
-    <button class="mt-4 btn ads-color-verdigris">Submit</button>
-  </form>
+<!--  <form action="/ads/create" method="post">-->
+<!--    <div>-->
+<!--      <label class="form-label" for="title">Title:</label>-->
+<!--      <input class="form-control" type="text" name="title" id="title"><br>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label class="form-label" for="description">Description:</label>-->
+<!--      <textarea class="form-control" name="description" id="description"></textarea>-->
+<!--    </div>-->
+
+<!--    <button class="mt-4 btn ads-color-verdigris">Submit</button>-->
+<!--  </form>-->
 </div>
 
 <footer th:insert="~{partials/partials :: footer}" class="ads-page-footer ads-color-french-violet"></footer>

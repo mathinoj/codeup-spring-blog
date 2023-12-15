@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @Controller
@@ -18,6 +20,8 @@ public class AdController {
 
     private AdDao adDao;
     private UserRepository userDao;
+//    private CategoryDao categoryDao;
+
 
 //    public AdController(AdDao adDao){
 //        this.adDao = adDao;
@@ -44,16 +48,51 @@ public class AdController {
     }
 
     @GetMapping({"/create", "/create/"})
-    public String showCreate() {
+    public String showCreate(Model model) {
+//        model.addAttribute("categories", categoryDao.findAll());
+        model.addAttribute("ad", new Ad());
         return "/ads/create";
     }
 
     @PostMapping({"/create", "/create/"})
-    public String doCreate(@RequestParam(name="title") String title,
-                           @RequestParam(name = "description") String description) {
-        Ad ad = new Ad(title, description);
+    public String doCreate(
+//            @RequestParam(name="title") String title,
+//            @RequestParam(name = "description") String description
+            @ModelAttribute Ad ad
+    )
+    {
+//        Ad ad = new Ad(title, description);
         ad.setUser(userDao.findUserById(1L));
         adDao.save(ad);
         return "redirect:/ads";
     }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model){
+        Ad ad;
+        if(adDao.findById(id).isPresent()){
+            ad = adDao.findById(id).get();
+        }else{
+            ad = null;
+        }
+        model.addAttribute("ad", ad);
+        return "/ads/edit";
+    }
+
+    @PostMapping("/ads/{id}/edit")
+    public String editAd(
+//            @ModelAttribute Ad ad,
+//            @RequestParam long userId
+            @ModelAttribute Ad modifiedAd
+    )
+    {
+        Ad oldAd = adDao.findById(modifiedAd.getId()).get();
+        modifiedAd.setUser(oldAd.getUser());
+        adDao.save(modifiedAd);
+//        ad.setUser(userDao.findUserById(userId));
+//        adDao.save(ad);
+        return "redirect:/ads";
+    }
+
+
 }

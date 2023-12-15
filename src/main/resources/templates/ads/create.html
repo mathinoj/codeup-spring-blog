@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
   <th:block th:replace="~{partials/partials :: head (title='Submit an Ad')}"></th:block>
@@ -14,14 +14,14 @@
 
 <div class="container-fluid">
 
-  <form action="/ads/create" method="post">
+  <form th:action="@{/ads/create}" th:method="post" th:object="${ad}">
     <div>
       <label class="form-label" for="title">Title:</label>
-      <input class="form-control" type="text" name="title" id="title"><br>
+      <input class="form-control" type="text" th:field="*{title}"><br>
     </div>
     <div>
       <label class="form-label" for="description">Description:</label>
-      <textarea class="form-control" name="description" id="description"></textarea>
+      <textarea class="form-control" th:field="*{description}"></textarea>
     </div>
 
     <button class="mt-4 btn ads-color-verdigris">Submit</button>
