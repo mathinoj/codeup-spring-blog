@@ -96,31 +96,13 @@ public class AdController {
         return "redirect:/ads";
     }
 
-//@PostMapping("/{id}/edit")
 //    @DeleteMapping("/delete/{id}")
 @GetMapping("/{id}/delete")
 public String deleteAd(@PathVariable("id") long id){
-//    Ad deleteAd = adDao.findById(id).get();
-    Ad deleteAd = adDao.deleteById(id);
-
-    System.out.println("da: " +deleteAd);
-    adDao.delete(deleteAd);
-        return "redirect:/ads";
-
+    adDao.deleteById(id);
+    return "redirect:/ads";
     }
-//    private void deleteContact() {
-//        Input nameSearch = new Input();
-//        String grabName = nameSearch.getString("Delete contact by name: ");
-//        List<String> contactsListDelete = readFile(pathToContactsFile);
-//        for (String contactDelete : readFile(pathToContactsFile)) {
-////        for (String contactDelete : contactsListDelete) {
-//            String name = contactDelete.split("\\|")[0].trim();
-//            if (name.equalsIgnoreCase(grabName)) {
-//                contactsListDelete.removeIf(newDelete -> newDelete.equals(contactDelete));
-//                System.out.println("-------------------------");
-//                writeListToFile(pathToContactsFile, contactsListDelete);
-//            }
-//        }
-//    }
+
+
 
 }
