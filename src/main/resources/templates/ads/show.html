@@ -14,26 +14,18 @@
 
 <div class="container-fluid">
 
+<!--  <h2 th:if="${ad == null}">Post not found</h2>-->
+<!--  <div th:if="${ad != null}">-->
   <h2>Here is the ad:</h2>
   <h3 th:text="${ad.title}"></h3>
   <p th:text="${ad.description}"></p>
-  <p>Posted by: [[${ad.user.username}]]</p>
+  <p th:if="${ad.user} != null">Posted by: [[${ad.user.username}]]</p>
   <a th:href="@{|/ads/${ad.id}/edit|}">Edit</a>
   <a th:href="@{|/ads/${ad.id}/delete|}">Delete</a>
 <!--  <a th:href="@{|/ads|}">Delete</a>-->
 
-<!--  <form action="/ads/create" method="post">-->
-<!--    <div>-->
-<!--      <label class="form-label" for="title">Title:</label>-->
-<!--      <input class="form-control" type="text" name="title" id="title"><br>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--      <label class="form-label" for="description">Description:</label>-->
-<!--      <textarea class="form-control" name="description" id="description"></textarea>-->
-<!--    </div>-->
 
-<!--    <button class="mt-4 btn ads-color-verdigris">Submit</button>-->
-<!--  </form>-->
+<!--  </div>-->
 </div>
 
 <footer th:insert="~{partials/partials :: footer}" class="ads-page-footer ads-color-french-violet"></footer>

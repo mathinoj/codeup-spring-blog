@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @Controller
@@ -41,7 +38,6 @@ public class AdController {
         Ad ad;
         if (adDao.findById(id).isPresent()){
             ad = adDao.findById(id).get();
-//            System.out.println(ad);
         } else {
             ad = new Ad("Ad not found", "");
         }
@@ -82,24 +78,29 @@ public class AdController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editAd(
-//            @ModelAttribute Ad ad,
-//            @RequestParam long userId
-            @ModelAttribute Ad modifiedAd
-    )
-    {
-        Ad oldAd = adDao.findById(modifiedAd.getId()).get();
-        modifiedAd.setUser(oldAd.getUser());
+    public String editAd(@ModelAttribute Ad modifiedAd){
+        Ad oldAd = null;
+        Optional<Ad> checkAd = adDao.findById(modifiedAd.getId());
+        if(checkAd.isPresent()){
+            oldAd = checkAd.get();
+        }
+        if(oldAd != null){
+            modifiedAd.setUser(oldAd.getUser());
+        }
+//        Ad oldAd = adDao.findById(modifiedAd.getId()).get();
+//        modifiedAd.setUser(oldAd.getUser());
         adDao.save(modifiedAd);
-//        ad.setUser(userDao.findUserById(userId));
-//        adDao.save(ad);
         return "redirect:/ads";
     }
 
 //    @DeleteMapping("/delete/{id}")
 @GetMapping("/{id}/delete")
 public String deleteAd(@PathVariable("id") long id){
-    adDao.deleteById(id);
+        if(adDao.findById(id).isPresent()){
+            adDao.deleteById(id);
+        } else {
+            return "redirect:/ads/create";
+        }
     return "redirect:/ads";
     }
 
