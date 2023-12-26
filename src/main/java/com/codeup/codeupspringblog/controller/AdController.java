@@ -3,6 +3,7 @@ package com.codeup.codeupspringblog.controller;
 import com.codeup.codeupspringblog.dao.AdDao;
 import com.codeup.codeupspringblog.dao.UserRepository;
 import com.codeup.codeupspringblog.models.Ad;
+import com.codeup.codeupspringblog.models.Post;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class AdController {
         Ad ad;
         if (adDao.findById(id).isPresent()){
             ad = adDao.findById(id).get();
+//            System.out.println(ad);
         } else {
             ad = new Ad("Ad not found", "");
         }
@@ -79,7 +81,7 @@ public class AdController {
         return "/ads/edit";
     }
 
-    @PostMapping("/ads/{id}/edit")
+    @PostMapping("/{id}/edit")
     public String editAd(
 //            @ModelAttribute Ad ad,
 //            @RequestParam long userId
@@ -94,5 +96,31 @@ public class AdController {
         return "redirect:/ads";
     }
 
+//@PostMapping("/{id}/edit")
+//    @DeleteMapping("/delete/{id}")
+@GetMapping("/{id}/delete")
+public String deleteAd(@PathVariable("id") long id){
+//    Ad deleteAd = adDao.findById(id).get();
+    Ad deleteAd = adDao.deleteById(id);
+
+    System.out.println("da: " +deleteAd);
+    adDao.delete(deleteAd);
+        return "redirect:/ads";
+
+    }
+//    private void deleteContact() {
+//        Input nameSearch = new Input();
+//        String grabName = nameSearch.getString("Delete contact by name: ");
+//        List<String> contactsListDelete = readFile(pathToContactsFile);
+//        for (String contactDelete : readFile(pathToContactsFile)) {
+////        for (String contactDelete : contactsListDelete) {
+//            String name = contactDelete.split("\\|")[0].trim();
+//            if (name.equalsIgnoreCase(grabName)) {
+//                contactsListDelete.removeIf(newDelete -> newDelete.equals(contactDelete));
+//                System.out.println("-------------------------");
+//                writeListToFile(pathToContactsFile, contactsListDelete);
+//            }
+//        }
+//    }
 
 }

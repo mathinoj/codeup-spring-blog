@@ -19,6 +19,8 @@
   <p th:text="${ad.description}"></p>
   <p>Posted by: [[${ad.user.username}]]</p>
   <a th:href="@{|/ads/${ad.id}/edit|}">Edit</a>
+  <a th:href="@{|/ads/${ad.id}/delete|}">Delete</a>
+<!--  <a th:href="@{|/ads|}">Delete</a>-->
 
 <!--  <form action="/ads/create" method="post">-->
 <!--    <div>-->
